@@ -1,111 +1,102 @@
-# Multi-Container Application Deployment with Docker Compose and Kubernetes
+# CI-CD-Pipeline
+Real time webapp deployment on Kubernetes cluster using Jenkins CI/CD pipeline.
 
-This repository contains the deliverables for the **Multi-Container Application Deployment** task assigned by **Techdome**. The task involves deploying a full-stack application (frontend, backend, and database) using **Docker Compose** and **Kubernetes**. Below, you’ll find the architecture details, deployment strategy, and instructions for building and deploying the application.
+# INTRODUCTION TO DOCKER
+Docker is an open platform for developing, shipping, and running
+applications. Docker enables you to separate your applications from your
+infrastructure so you can deliver software quickly. Docker is a software
+platform that allows you to build, test, and deploy applications quickly.
+Docker packages software into standardized units called containers that
+have everything the software needs to run including libraries, system tools,
+code, and runtime.Docker registries are used to host and distribute Docker
+Images. Docker Hub is Docker's official cloud-based registry. The free
+version of Docker Hub allows for one private repository. Nonpaying
+users are otherwise restricted to public repositories.
+.
 
-## Repository Structure
+![112](https://user-images.githubusercontent.com/78873371/219970678-2ff8f90f-1ffa-4d8a-9739-4fa6df6f4945.jpg)
 
-This repository contains two key components:
-- **Backend**: [Techdome-backend](https://github.com/Anand-1432/Techdome-backend)
-- **Frontend**: [Techdome-frontend](https://github.com/Anand-1432/Techdome-frontend)
+# PROJECT DESCRIPTION
+1. JENKINS
+2. ANSIBLE
+3. WEBAPP(Kubernetes cluster)
 
-### Key Tools Used:
-- **Docker**: For containerizing the application.
-- **Docker Compose**: To define and manage multi-container applications.
-- **Kubernetes**: For deploying and managing the application in a local Kubernetes cluster.
-- **Minikube**: For setting up a local Kubernetes environment.
+# WORKING
 
----
+Firstly, developer writes the Docker File and push it to GITHUB Repository.
+If the git repository gets new commit, it will notify Jenkins through
+WEBHOOK to build that new code.
+JENKINS will PULL all the code from repository and SSH (secure shell) to
+the ANSIBLE SERVER in order to provide network communication and
+share data.
+ANSIBLE SERVER will firstly get the DockerFile and start build Image.
+Then, tag image and push it to DOCKER HUB.
+Ansible server will then SSH to KUBERNETES SERVER.
+Thereafter, Fetch the LATEST IMAGE which is just build and pushed. PULL
+from DOCKER HUB and build container from Image.
+This container must be accessible to us using IP and Port by writing
+service.mk in Kubernetes Cluster.
+A Kubernetes cluster is a set of nodes that run containerized
+applications. Containerizing applications packages an app with its
+dependences and some necessary services. They are more lightweight
+and flexible than virtual machines.
+Also, we maintain a image version as well as Separate latest Image with
+Build Number.
 
-## Application Architecture
+# DevOps Tools- 
+## JENKINS
+A DevOps software development method called continuous integration
+involves developers regularly merging their code changes into a common
+repository, which is followed by the execution of automated builds and
+tests. Developers frequently utilise Jenkins, an Open-Source Continuous
+Integration (CI) tool, to automate the testing and deployment of their apps.
+A Webhook is a tool that enables a Jenkins project to be built automatically
+in response to a commit that is pushed to a Git repository.
+![113](https://user-images.githubusercontent.com/78873371/219970711-b3514dc6-4a01-44ef-93f1-16c978fa0786.jpg)
 
-The multi-container application consists of the following services:
+## ANSIBLE
+Ansible is defined as an open-source, cross-platform tool for resource
+provisioning automation that DevOps professionals popularly use for
+continuous delivery of software code by taking advantage of an
+“infrastructure as code” approach.
+![114](https://user-images.githubusercontent.com/78873371/219970728-e8abf54e-ec28-485a-9b41-57d9ad37ea33.jpg)
 
-1. **Frontend Container**:
-   - A user-facing web application that communicates with the backend API.
-   - Built with modern web technologies (e.g., React, Angular, or Vue).
-   
-2. **Backend Container**:
-   - A RESTful API service that handles business logic and connects to the database.
-   - Built with a framework like Node.js, Flask, or Django.
-   
-3. **Database Container**:
-   - A database service to persist application data.
-   - Uses a relational or NoSQL database like MySQL, PostgreSQL, or MongoDB.
+## GITHUB
+GitHub offers an end-to-end DevOps platform with cloud-hosted Git
+services—i.e., source code management (SCM) and versioning control.
+GitHub also includes project management, CI/CD, automation,
+enterprise-grade security scanning, and more to serve all software
+development needs
+.GitHub has always made it easy for developers to move back and forth
+between public/private development modes
+![115](https://user-images.githubusercontent.com/78873371/219970747-7581c086-ed6e-4449-a198-ebcf2f417e7d.jpg)
 
-These three containers are interconnected, forming a complete full-stack application.
+# WORKING
+1. Jenkins running on a container
+![116](https://user-images.githubusercontent.com/78873371/219970787-34bf33a8-eaca-4143-a254-e11ce1266ae4.jpg)
+![117](https://user-images.githubusercontent.com/78873371/219970794-65a2dd20-a33b-495c-a98f-2fc0a7a9da09.jpg)
 
----
+2. Ansible running on a container
+![118](https://user-images.githubusercontent.com/78873371/219970802-9d091a84-0f48-4e15-9dc3-e42e6f5b510a.jpg)
 
-## Docker Compose Setup
+3. Single node minikube cluster running on ec2 instance
+![119](https://user-images.githubusercontent.com/78873371/219970907-39202046-968a-4597-951c-5afe6de74c3c.jpg)
 
-The **Docker Compose** file is used to define and manage the application’s containers. It specifies how each container (frontend, backend, and database) is built, networked, and run.
 
-### Key Sections of the Docker Compose File:
-- **Services**: Defines the frontend, backend, and database containers.
-- **Networks**: Configures container networking to enable inter-service communication.
-- **Volumes**: Configures persistent storage for the database container.
-- **Ports**: Maps the internal container ports to the host machine for accessibility.
+4. Developer commits and pushes dockerfile to github repository
+![120](https://user-images.githubusercontent.com/78873371/219970965-a878a5c3-d767-441f-9966-078df2688848.jpg)
 
-#### To Build and Start the Application with Docker Compose:
-1. Clone the repositories:
-    ```bash
-    git clone https://github.com/Anand-1432/Techdome-backend
-    git clone https://github.com/Anand-1432/Techdome-frontend
-    ```
-2. Run Docker Compose:
-    ```bash
-    docker-compose up --build
-    ```
-3. Access the frontend application in the browser at `http://localhost:<frontend_port>`.
+5. Jenkins is notified through WEBHOOK to build that new code.
+![121](https://user-images.githubusercontent.com/78873371/219970955-c10ce62a-6a2f-4442-b824-5bd9f6412ba1.jpg)
 
----
+6. JENKINS will PULL all the code from repository and SSH (secure
+shell) to the ANSIBLE SERVER in order to provide network
+communication and share data.
+![122](https://user-images.githubusercontent.com/78873371/219970981-3b3e1a85-5ab3-4bb4-9e33-f44653c84c81.jpg)
 
-## Kubernetes Deployment
+7. Final deployment of website .
+![123](https://user-images.githubusercontent.com/78873371/219970984-019628d8-7db4-4e7f-8844-edf6274264c9.jpg)
 
-### Kubernetes Deployment Strategy:
-The application is deployed on a local Kubernetes cluster (using **Minikube**) for container orchestration. The deployment involves creating **Pods**, **Services**, and **Deployments** for the frontend, backend, and database components.
+8. Complete Pipeline
+![124](https://user-images.githubusercontent.com/78873371/219970990-cc959a16-b4b2-4243-974e-608c9938df1e.jpg)
 
-### Kubernetes Manifests:
-- **Deployment Manifests**: YAML files that define the deployment of each container as a Pod.
-- **Service Manifests**: YAML files that define how services within the Kubernetes cluster communicate.
-
-### To Deploy the Application to Kubernetes:
-1. Start Minikube:
-    ```bash
-    minikube start
-    ```
-2. Apply the Kubernetes manifests:
-    ```bash
-    kubectl apply -f kubernetes-manifests/
-    ```
-3. Verify the Pods and Services are running:
-    ```bash
-    kubectl get pods
-    kubectl get services
-    ```
-4. Access the frontend application via the Minikube service IP:
-    ```bash
-    minikube service <frontend-service-name>
-    ```
-
----
-
-## Deployment Strategy
-
-1. **Local Development**: For local development and testing, Docker Compose is used to spin up all the containers and connect them via a shared network.
-2. **Kubernetes Deployment**: Once the application is tested locally, it is deployed to a local Kubernetes cluster using **Minikube**. Kubernetes handles the orchestration, load balancing, and scaling of the containers.
-3. **Networking**: The frontend and backend communicate via a private Docker/Kubernetes network. The database container is also reachable from the backend container.
-
----
-
-## Deliverables
-
-1. **Docker Compose File**: Defines the multi-container architecture.
-2. **Kubernetes Deployment Manifests**: (Optional) YAML files for deploying the application in Kubernetes.
-3. **Documentation**: This README file provides an overview of the application architecture and the deployment process.
-
----
-
-## Conclusion
-
-This multi-container application successfully demonstrates deploying a full-stack system using Docker Compose and Kubernetes. The setup ensures scalability, modularity, and easy orchestration of the application services.
