@@ -83,13 +83,11 @@ between public/private development modes
 ![119](https://user-images.githubusercontent.com/78873371/219970907-39202046-968a-4597-951c-5afe6de74c3c.jpg)
 
 
-4. Developer commits and pushes dockerfile to github repository
-![120](https://user-images.githubusercontent.com/78873371/219970965-a878a5c3-d767-441f-9966-078df2688848.jpg)
 
-5. Jenkins is notified through WEBHOOK to build that new code.
+4. Jenkins is notified through WEBHOOK to build that new code.
 ![121](https://user-images.githubusercontent.com/78873371/219970955-c10ce62a-6a2f-4442-b824-5bd9f6412ba1.jpg)
 
-6. JENKINS will PULL all the code from repository and SSH (secure
+5. JENKINS will PULL all the code from repository and SSH (secure
 shell) to the ANSIBLE SERVER in order to provide network
 communication and share data.
 ![122](https://user-images.githubusercontent.com/78873371/219970981-3b3e1a85-5ab3-4bb4-9e33-f44653c84c81.jpg)
