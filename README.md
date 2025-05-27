@@ -84,17 +84,14 @@ between public/private development modes
 
 
 
-4. Jenkins is notified through WEBHOOK to build that new code.
-![121](https://user-images.githubusercontent.com/78873371/219970955-c10ce62a-6a2f-4442-b824-5bd9f6412ba1.jpg)
-
-5. JENKINS will PULL all the code from repository and SSH (secure
+4. JENKINS will PULL all the code from repository and SSH (secure
 shell) to the ANSIBLE SERVER in order to provide network
 communication and share data.
 ![122](https://user-images.githubusercontent.com/78873371/219970981-3b3e1a85-5ab3-4bb4-9e33-f44653c84c81.jpg)
 
-7. Final deployment of website .
+5. Final deployment of website .
 ![123](https://user-images.githubusercontent.com/78873371/219970984-019628d8-7db4-4e7f-8844-edf6274264c9.jpg)
 
-8. Complete Pipeline
+6. Complete Pipeline
 ![124](https://user-images.githubusercontent.com/78873371/219970990-cc959a16-b4b2-4243-974e-608c9938df1e.jpg)
 
